@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="polarbleplugin"
+        version="1.0.0">
+
+    <name>PolarBlePlugin</name>
+    <description>A Cordova plugin to connect Polar BLE devices.</description>
+    <license>MIT</license>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0"/>
+    </engines>
+
+    <js-module src="www/PolarBlePlugin.js" name="PolarBlePlugin">
+        <clobbers target="PolarBlePlugin"/>
+    </js-module>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+			<preference name="GradlePluginKotlinVersion" value="1.9.20" />
+			<preference name="GradlePluginVersion" value="8.0.0" />
+			<preference name="GradlePluginKotlinEnabled" value="true" />
+			<preference name="GradlePluginKotlinCodeStyle" value="official" />			
+	        <feature name="PolarBlePlugin">
+                <param name="android-package" value="polarbleplugin.PolarBlePlugin"/>
+            </feature>
+        </config-file>
+		<config-file target="AndroidManifest.xml" parent="/*">
+            <!-- Polar SDK needs Bluetooth scan permission to search for BLE devices. Polar BLE SDK doesn't use the scan
+			to decide the location so "neverForLocation" permission flag can be used.-->
+			<uses-permission
+				android:name="android.permission.BLUETOOTH_SCAN"
+				android:usesPermissionFlags="neverForLocation"
+				tools:targetApi="s" />
+
+			<!-- Polar SDK needs Bluetooth connect permission to connect for found BLE devices.-->
+			<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+			<!-- Allows Polar SDK to connect to paired bluetooth devices. Legacy Bluetooth permission,
+			 which is needed on devices with API 30 (Android Q) or older. -->
+			<uses-permission
+				android:name="android.permission.BLUETOOTH"
+				android:maxSdkVersion="30" />
+
+			<!-- Allows Polar SDK to discover and pair bluetooth devices. Legacy Bluetooth permission,
+			 which is needed on devices with API 30 (Android Q) or older. -->
+			<uses-permission
+				android:name="android.permission.BLUETOOTH_ADMIN"
+				android:maxSdkVersion="30" />
+
+			<!-- Polar SDK needs the fine location permission to get results for Bluetooth scan. Request
+			fine location permission on devices with API 30 (Android Q). Note, if your application 
+			needs location for other purposes than bluetooth then remove android:maxSdkVersion="30"-->
+			<uses-permission
+				android:name="android.permission.ACCESS_FINE_LOCATION"
+				android:maxSdkVersion="30" />
+        </config-file>
+		<source-file src="src/android/PolarBlePlugin.kt" target-dir="src/main/kotlin/polarbleplugin"/>
+		<framework src="src/android/plugin.gradle" custom="true" type="gradleReference" />
+    </platform>
+</plugin>

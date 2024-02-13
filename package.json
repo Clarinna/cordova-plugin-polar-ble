@@ -1,0 +1,18 @@
+{
+  "name": "com.okoproject.vps.polarbleplugin",
+  "displayName": "PolarBlePlugin",
+  "version": "1.0.0",
+  "description": "PolarBlePlugin plugin.",
+  "cordova": {
+    "id": "com.okoproject.vps.polarbleplugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "OKTICS",
+  "license": "MIT"
+}
