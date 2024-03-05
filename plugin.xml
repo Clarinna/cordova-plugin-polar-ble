@@ -10,6 +10,7 @@
 
     <engines>
         <engine name="cordova" version=">=3.0.0"/>
+		<engine name="cordova-ios" verions=">=5.1.0"/>
     </engines>
 
     <js-module src="www/PolarBlePlugin.js" name="PolarBlePlugin">
@@ -26,7 +27,7 @@
                 <param name="android-package" value="polarbleplugin.PolarBlePlugin"/>
             </feature>
         </config-file>
-		<config-file target="AndroidManifest.xml" parent="/*">
+		<config-file type="merge" target="AndroidManifest.xml" parent="/*">
             <!-- Polar SDK needs Bluetooth scan permission to search for BLE devices. Polar BLE SDK doesn't use the scan
 			to decide the location so "neverForLocation" permission flag can be used.-->
 			<uses-permission
@@ -59,4 +60,17 @@
 		<source-file src="src/android/PolarBlePlugin.kt" target-dir="src/main/kotlin/polarbleplugin"/>
 		<framework src="src/android/plugin.gradle" custom="true" type="gradleReference" />
     </platform>
+	<platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="PolarBlePlugin">
+                <param name="ios-package" value="PolarBlePlugin"/>
+            </feature>
+        </config-file>
+        <source-file src="src/ios/PolarBlePlugin.swift" target-dir="PolarBlePlugin" />
+        <podspec>
+			<pods use-frameworks="true">
+				<pod name="PolarBleSdk" spec="~> 5.0" />
+			</pods>
+        </podspec>
+   </platform> 
 </plugin>
